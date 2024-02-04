@@ -1,0 +1,72 @@
+---
+title: "Week 1 Lab 607"
+author: "Blessing A"
+output: html_document
+date: "February 1, 2024"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library (readr);
+library (tidyverse);
+library (knitr);
+library (dplyr);
+library(ggplot2)
+congressage <- read.csv(url("https://raw.githubusercontent.com/fivethirtyeight/data/master/congress-demographics/data_aging_congress.csv"))
+```
+
+<font> Overview: The article I chose is "Congress Today Than It's Ever Been". I choose this article because it ccaught my interest. I've been talking about this lately outside school; that many people in the office are just becoming older and older. And these older representative lack modern familiriaty with modern technology as the article stated. In this R I will show the trend in median age over time of representatives using graphs, and or plots. Link: https://fivethirtyeight.com/features/aging-congress-boomers/.</font>
+
+<font size ="4"> Plot Attempt </font>
+
+```{r congressage plotted}
+ggplot(data = congressage, aes(x = congress, y = age_years)) +
+  geom_jitter(width = 0.1, height = 0, size = 2, alpha = 0.6, color = "darkblue") +
+  xlab("Congress") +
+  ylab("Age") +
+  geom_line()
+
+```
+
+<font size ="4"> Sorted Group and Plotting </font> 
+
+```{r}
+  
+# Group by congress and calculated mean and median age      
+  sortedCongress <- congressage %>%
+  group_by(congress) %>%
+  summarize(avg_age = mean(age_years, na.rm = TRUE),
+            median_age = median(age_years, na.rm = TRUE))
+  
+# Plotting
+  ggplot(sortedCongress, aes(x = congress)) +
+  geom_point(aes(y = avg_age, color = "Average Age")) +
+  geom_point(aes(y = median_age, color = "Median Age")) +
+  xlab("Congress") +
+  ylab("Age") +
+  scale_color_manual(values = c("red", "blue"), guide = guide_legend(title = NULL)) +
+  theme_minimal()
+```
+
+<font size ="4"> Line Graph for average and median age </font> 
+
+```{r}
+# Create a line graph for average and median age
+ggplot(sortedCongress, aes(x = congress)) +
+  geom_line(aes(y = avg_age, color = "Average Age")) +
+  geom_line(aes(y = median_age, color = "Median Age")) +
+  xlab("Congress") +
+  ylab("Age") +
+  scale_color_manual(values = c("red", "blue"), guide = guide_legend(title = NULL)) +
+  theme_minimal()
+```
+
+
+<font size ="4"> Summary of Sorted Congress </font> 
+```{r}
+# Display the summary of sortedCongress
+glimpse(sortedCongress)
+```
+
+
+<font size= "4"> Conclusion: Based on the plots, as congress became more and more(and th years increas) so did the age of representatives in Congress rise.</font>
