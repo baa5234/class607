@@ -1,0 +1,125 @@
+---
+title: "Week 3 Lab 607"
+author: "Blessing Anoroh"
+output: html_document
+date: "02-08-2024"
+---
+
+## Question 1:
+Problem: Using the 173 majors listed in fivethirtyeight.com’s College Majors dataset [https://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/], provide code that identifies the majors that contain either "DATA" or "STATISTICS"
+
+<font size=3><b> Solution to Question 1 </font></b>
+
+To solve Question 1 Problem; I first imported the raw college major data from Github, first using the link provided from fivethirtyeight website to open the article. <br/>
+Then I loaded packages: dplyr , tidyverse and readr. Afterwards, I searched the majors data frame through filter. The filter uses regex to filter out majors that contain either ‘DATA’ or ‘STATISTICS’ and pulls it out into a new data frame called mathematical_majors.
+
+```{r setup}
+#import data and packages
+library(tidyverse)
+library(dplyr)
+library(readr)
+majors <- read.csv(url("https://raw.githubusercontent.com/fivethirtyeight/data/master/college-majors/majors-list.csv"))
+
+#filter majors that contains "DATA" & "STATISTICS"
+(mathematical_majors <- majors %>%
+  filter(str_detect(Major, "DATA") | str_detect(Major, "STATISTICS")))
+
+
+```
+
+
+## Question 2
+
+Write code that transforms the data below:
+
+[1] "bell pepper"  "bilberry"     "blackberry"   "blood orange".
+ 
+[5] "blueberry"    "cantaloupe"   "chili pepper" "cloudberry"  
+
+[9] "elderberry"   "lime"         "lychee"       "mulberry"  
+
+[13] "olive"        "salal berry"  
+
+
+Into a format like this:
+
+c("bell pepper", "bilberry", "blackberry", "blood orange", "blueberry", "cantaloupe", "chili pepper", "cloudberry", "elderberry", "lime", "lychee", "mulberry", "olive", "salal berry")
+
+
+<font size=3><b> Solution to Question 2 </font></b>
+
+
+```{r }
+fruits <- c("bell pepper", "bilberry", "blackberry", "blood orange", "blueberry", "cantaloupe", "chili pepper", "cloudberry", "elderberry", "lime", "lychee", "mulberry", "olive", "salal berry")
+
+fruit_vec <- paste0("\"", fruits, "\"")
+
+fru_vec2 <- paste0(fruit_vec, collapse = ", ") 
+
+fru_vec3 <- paste0("c(", fru_vec2, ")")
+
+cat(fru_vec3)
+
+```
+
+ <font size=2><b> Steps </font></b>
+ 
+So I had a hard time with this one a bit to make it look exactly like the way it is showed. I at first had it but minus the quotations around it. So I eventually came to this solution a different style. <br/>
+I first created the string. The I had added backlash and quotation around each element (fruits), and defined it into a new vector called "fruit_vec". <br/>
+Next, I collapsed the quoted words into a string, separating each word with a comma. Now identified as "fruit_vec2". <br/>
+Then, I added the leading characters which is "c(.....)". <br/>
+Finally, I parsed the backslashes as escape characters using cat function. The output is now in the desired format.
+
+
+
+## Question 3
+
+Describe, in words, what these expressions will match:
+
+<!-- there is an extra backslash in script to show the original expression in bullet points 2,4,and 5 because the first backlash escapes -->
+
+*   (.)\1\1
+*   "(.)(.)\\\2\\\1".              
+*   (..)\1
+*   "(.).\\\1.\\\1"               
+*   "(.)(.)(.).*\\\3\\2\\\1"         
+
+
+<font size=3><b> Solution to Question 3 </font></b>
+
+<b><i> there is an extra backslash in script to show the original expression in bullet points 2,4,and 5 because the first backlash escapes ; in question above is original expression. </b></i>
+
+
+*  (.)\1\1 -  matches any character that is repeated three times in a row, like ‘aaa’, 'bbb'.
+
+*  "(.)(.)\\\2\\\1" - matches any two characters followed by the same two characters in reverse order, example: abba or 1441.
+
+*  (..)\1 - this expression will match with 2 adjoining repeats of a pair of characters or two characters repeated; example '3131' or 'abab' . 
+
+*  “(.).\\\1.\\\1” - this match, will search for a five character term, three of which are the same. Example lets say you have characters 'd' 'e' 'f'. The output would be  'dedfd' or '41424'.
+
+*   “(.)(.)(.).*\\\3\\\2\\\1” - this will match a set of characters that begin and end with the same three characters, except the second instance is reversed, like “racecar” or '12321'.
+
+
+
+## Question 4 
+
+Construct regular expressions to match words that:
+
+* Start and end with the same character.
+* Contain a repeated pair of letters (e.g. "church" contains "ch" repeated twice.)
+* Contain one letter repeated in at least three places (e.g. "eleven" contains three "e"s.)
+
+<font size=3><b> Solution to Question 4 </font></b>
+
+
+<b><i> there is an extra backslash in script to show the expression I intend to be solution. a to c is  2 backslash but made it 3 backlashes in script to show 2 backlashes for html </b></i>
+
+<!-- there is an extra backslash in script to show the original expression; read above -->
+
+a).  Start and end with the same character ---> ^(.).*\\\1$ 
+
+b). Contain a repeated pair of letters ---->  (.).*\\\1 
+
+c). Contain one letter repeated in at least three places ---> (.).*\\\1.*\\\1 
+
