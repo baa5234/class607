@@ -1,0 +1,78 @@
+---
+title: "Week 2 lab 607"
+author: "Blessing Anoroh"
+date: "February 2, 2024"
+output: html_document
+---
+
+## Week 2 Assignment R and SQL 
+
+Part 1 : Build a table
+
+* Choose six recent popular movies. 
+* Ask at least five people that you know (friends, family, classmates, imaginary friends if necessary) to rate each of these movies that they have seen on a scale of 1 to 5.
+
+
+Part 2: Store data in SQL database 
+
+* Take the results (observations) and store them in the class MySQL database: \
+-Server name: cunydata607sql.mysql.database.azure.com  \
+-Username / password: will be given to you in an email \
+Note: it is good practice to change your password. To do so, use this SQL command: 	SET PASSWORD = ‘<your new password here>';
+
+Part 3: Transfer data from SQL database to R dataframe 
+
+* Load the information from the SQL database into an R dataframe.
+
+
+<font size =3> Build Table and Store Data in SQL Database </font>
+
+A table has been created and stored in the cunydata607sql.mysql.database.azure.com called “movieratings”.
+
+
+
+```{r setup}
+library (tidyverse)
+library(openintro)
+library (RMySQL)
+library(DBI)
+```
+
+
+
+```{r}
+#Import from SQL reference to Part 3
+
+mysqldb = dbConnect(RMySQL::MySQL(),
+                            dbname= 'blessing.abraham-anoroh65',
+                            host= 'cunydata607sql.mysql.database.azure.com',
+                            port=3306,
+                            user='blessing.abraham-anoroh65',
+                            password='blessing.abraham-anoroh65')
+
+dbListTables(mysqldb)
+```
+
+
+
+```{r, results}
+#fetching results from SQL
+
+result = dbSendQuery(mysqldb, "select * from movieratings")
+
+movieratings <- fetch(result)
+
+print(movieratings)
+```
+
+
+Part 4: Missing data strategy 
+
+* Implement an approach to missing data 
+* Explain why you decided to take the chosen approach \
+Note: consider that later in the course you will revisit this information you have collected and will use it to implement a Recommend-er.
+
+For missing data I would identify where the missing data is using WHERE command to find "NULL" - which is considered to empty perhaps. I can also remove or delete where there is missing data. But in this exercise I would input the missing data using the number "0" as the NULL because the rating is from 1 to 5. And I would not want the missing data to cause an issue in running the SQL.
+
+
+
