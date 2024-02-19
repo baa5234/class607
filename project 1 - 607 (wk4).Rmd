@@ -66,8 +66,6 @@ for (i in 1:(n / 3)) {
 csv <- data.frame(Plr_Name, Plr_State, Plr_Points, Plr_PreRating, O_PreRating); csv
 ```
 
-## Writing the CVS file
-
 ```{r}
 write.table(csv, file = "Project1_607_chessinfo.csv", sep = ",", col.names = T)
 ```
