@@ -1,0 +1,72 @@
+---
+title: "Project 1 - 607"
+author: "Blessing Anoroh"
+date: "February 16, 2024"
+output: html_document
+---
+
+## Load Data / Import Data into R
+ 
+```{r setup}
+library(tidyverse)
+library(readr)
+library(dplyr)
+library (stringr)
+
+
+
+chess_tournament <- read.csv(paste0("/Users/blessinga/Desktop/chess.txt"), header=F)
+
+head(chess_tournament)
+
+summary(chess_tournament) 
+
+
+```
+
+## Part 2: Remove and Divide Sequence
+
+```{r} 
+#Remove Uneeded Rows (heading)
+chess_tournament2 <- chess_tournament[-c(1:3),]
+
+#Pull out rows : (3n+2) and (3n+3)
+n <- length(chess_tournament2)
+row1 <- chess_tournament2[seq(2, n, 3)]
+row2 <- chess_tournament2[seq(3, n, 3)]
+
+```
+
+
+## Extract Data w/ Expressions
+
+```{r}
+library(stringr)
+Plr_Num <- as.integer(str_extract(row1, "\\d+"))
+Plr_Name <- str_trim(str_extract(row1, "(\\w+\\s){2,3}"))
+Plr_State <- str_extract(row2, "\\w+")
+Plr_Points <- as.numeric(str_extract(row1, "\\d+\\.\\d+"))
+Plr_PreRating <- as.integer(str_extract(str_extract(row2, "[^\\d]\\d{3,4}[^\\d]"), "\\d+"))
+Opponents <- str_extract_all(str_extract_all(row1, "\\d+\\|"), "\\d+")
+``` 
+ 
+## Calculate Opponent Average Scores
+
+```{r}
+O_PreRating <- numeric(n / 3)
+
+for (i in 1:(n / 3)) { 
+  O_PreRating[i] <- mean(Plr_PreRating[as.numeric(unlist(Opponents[Plr_Num[i]]))]) 
+}
+```
+
+## Create Data Frame
+
+```{r}
+csv <- data.frame(Plr_Name, Plr_State, Plr_Points, Plr_PreRating, O_PreRating); csv
+```
+
+```{r}
+write.table(csv, file = "Project1_607_chessinfo.csv", sep = ",", col.names = T)
+```
+
