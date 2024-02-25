@@ -1,0 +1,89 @@
+---
+title: 'Week 5 607 : Unitdying Data'
+author: "Blessing Anoroh"
+date: "February 20, 2024"
+output: html_document
+---
+\
+
+(1) Create a .CSV file (or optionally, a MySQL database!) that includes all of the information above.  You’re encouraged to use a “wide” structure similar to how the information appears above, so that you can practice tidying and transformations as described below. \
+(2) Read the information from your .CSV file into R, and use tidyr and dplyr as needed to tidy and transform your data. \
+(3) Perform analysis to compare the arrival delays for the two airlines. \
+(4) Your code should be in an R Markdown file, posted to rpubs.com, and should include narrative descriptions of your data cleanup work, analysis, and conclusions.  Please include in your homework submission: \
+* The URL to the .Rmd file in your GitHub repository. and  \
+* The URL for your rpubs.com web page. 
+
+```{r setup}
+library(tidyr)
+library(dplyr)
+library(tidyverse)
+```
+
+<font size=5><b>  Creating a .CSV file and Read data </font></b>
+
+```{r}
+#create CSV
+csv <- rbind(c(NA,NA , "Los Angeles", "Phoenix", "San Diego", "San Francisco", "Seattle"),
+             c("ALASKA", "On Time", 497, 221, 212, 503, 1841),
+             c(NA, "Delayed", 62, 12, 20, 102, 305),
+             c("AM WEST", "On Time", 694, 4840, 383, 320, 201),
+             c(NA, "Delayed", 117, 415, 65, 129, 61))
+
+write.table(csv, file = "Wk3Assignment_Data_607.csv", sep = ",", col.names=F, row.names=F)
+
+#read data using dplyr and tidyr
+flight_data <- read.csv(paste0("Wk3Assignment_Data_607.csv"), 
+                             stringsAsFactors = F); flight_data
+
+```
+\ 
+
+<font size=5><b>  Tidying Data </font></b>
+
+```{r}
+
+#tidy by Airline and Status (delay or on time) with use of tidyr and dplyr
+long_data2 <- flight_data %>%
+mutate(Airlines1 = NA., Airlines2=lag(NA.)) %>% 
+mutate(Airline = coalesce(Airlines1,Airlines2), Status = NA..1)  %>%
+gather("Destination", "Flights", 3:7) %>% 
+select(Airline:Flights) %>% 
+arrange(Airline, desc(Status), Destination); long_data2
+```
+
+```{r}
+#tidy by cities
+flightdata2 <- flight_data %>% gather("city","no.flights", 3:7)
+flightdata2
+```
+\
+ 
+<font size=5><b> Performing analysis to compare the arrival delays for the two airlines </font></b>
+
+```{r}
+Perform <- long_data2 %>%
+  group_by(Airline) %>%
+  mutate(A_Total = sum(Flights)) %>% 
+  group_by(Airline, Status) %>%
+  mutate(S_Total = sum(Flights), A_Perf = S_Total / A_Total) %>% 
+  group_by(Airline, Destination) %>%
+  mutate(D_Total = sum(Flights), D_Perf = Flights / D_Total)
+
+# both airlines AL and AM Overall Performance
+data.frame(Perform[c(1,10,11,20), c(1,2,7)])
+```
+
+```{r}
+# Alaska Airlines and AM West by Destination
+Perf_by_Destination <- data.frame(Perform %>%
+  filter(Status == "On Time") %>% 
+  group_by(Destination) %>% 
+  unite(temp, D_Total, D_Perf) %>%
+  spread(Status, temp) %>%
+  select(Destination, Airline, On_Time = `On Time`) %>% 
+  spread(Airline, On_Time) %>%
+  separate(ALASKA, into=c("Flights.AL", "Perf.AL"), sep = "_", convert=T) %>% 
+  separate(`AM WEST`, into=c("Flights.AM", "Perf.AM"), sep = "_", convert=T) %>% 
+  mutate(Difference = Perf.AL - Perf.AM)  %>% 
+  arrange(Destination)); Perf_by_Destination
+```
