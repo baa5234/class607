@@ -1,0 +1,111 @@
+---
+title: 'Project 2: Class 607 Wine Quality'
+author: "Blessing Anoroh"
+date: "March 1, 2024"
+output: html_document
+---
+
+This data is used to determine the physciochemicals of Wine Quality.
+
+<font size=5><b>  Creating a .CSV file and Read data </font></b>
+
+```{r}
+library(readr)
+
+wine <- read.csv("/Users/blessinga/Desktop/winequality-red.csv", header=TRUE, sep=",")
+str(wine)
+
+colnames(wine)
+```
+
+
+```{r}
+# Checking for missing values
+sum(is.na(wine))
+
+# Summary statistics
+summary(wine)
+```
+
+## Renaming column names
+
+```{r}
+library(tidyr)
+library(dplyr)
+
+wine2<-rename(wine,FxAc=fixed.acidity, VolAc=volatile.acidity, CtAc=citric.acid, ResiSug=residual.sugar, Chlo=chlorides, FrSulfDio= free.sulfur.dioxide, TtlSulfDio= total.sulfur.dioxide, Dens =density, pH= pH, Sulph= sulphates, Alc=alcohol, Qlty = quality)
+head(wine2)
+
+```
+
+## Analysis of Wine Quality
+
+<b> Analysis 1: Summary </b>
+
+```{r}
+#average values by wine quality
+wine2_average_summary <- wine2 %>%
+  group_by(Qlty) %>%
+  summarise_all(.funs = list(mean))
+
+# Display the summary
+wine2_average_summary
+```
+<b>
+
+Quality 7 has the highest average fixed acidity. \
+Quality 3 has the highest average volatile acidity. \
+Quality 3 and 4 have the lowest average citric acid. \
+Quality 4 and 7 have the average higest Residual sugar. \
+Quality 3 have the highest average Chloride. \
+Quality 3 have the higest average free Sulfur dioxide. \
+Quality 6 have the highest average total sulfur dioxide. \
+The density for all qualities are quite similar as well as PH. \
+Quality 3 have higher dense and pH and lower sulphates. \
+Quality 8 have the highest alcohol level. \
+
+ANALYSIS FROM THIS SUMMARY: \
+Lower quality wines ratings 3 and 4 tend to have higher volatile acidity, lower citric acid, higher chlorides, higher density, higher pH, lower sulphates, and lower alcohol content. \
+Higher quality wines ratings 7 and 8 exhibit the opposite characteristics, with lower volatile acidity, higher citric acid, lower chlorides, lower density, lower pH, higher sulphates, and higher alcohol content.
+
+</b>
+
+\
+\
+<b> Analysis 2: Bar Graph</b>
+
+```{r}
+library(ggplot2)
+
+wine_sum3 <- wine %>%
+  group_by(quality) %>%
+  summarise(mean_fixed_acidity = mean(fixed.acidity),
+            mean_volatile_acidity = mean(volatile.acidity),
+            mean_citric_acid = mean(citric.acid),
+            mean_residual_sugar = mean(residual.sugar),
+            mean_chlorides = mean(chlorides),
+            mean_free_sulfur_dioxide = mean(free.sulfur.dioxide),
+            mean_total_sulfur_dioxide = mean(total.sulfur.dioxide),
+            mean_density = mean(density),
+            mean_pH = mean(pH),
+            mean_sulphates = mean(sulphates),
+            mean_alcohol = mean(alcohol))
+
+wine_sum_long <- wine_sum3 %>%
+  tidyr::pivot_longer(cols = -quality, names_to = "Property", values_to = "Mean_Value")
+
+# Create bar plot
+ggplot(wine_sum_long, aes(x = quality, y = Mean_Value, fill = Property)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Average Physicochemical Properties by Wine Quality",
+       x = "Wine Quality",
+       y = "Mean Value") +
+  scale_fill_brewer(palette = "Set2") 
+```
+
+ANALYSIS: \
+Focus on analysis Part 1 but this is an extra.\
+ This analysis of the average values of physicochemical properties grouped by wine quality shows an in depth visual bar graph of the difference variables of high and low-quality red wines. This can help winemakers and customers know which wine choices they prefer to buy based on the variables.
+
+\
+\
