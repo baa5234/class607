@@ -1,0 +1,80 @@
+---
+title: 'Project 2: Class 607  Property Sales'
+author: "Blessing Anoroh"
+date: "2024-03-04"
+output: html_document
+---
+
+## Create CSV and read data
+
+```{r setup}
+library(readr)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+property_sales <- read.csv("/Users/blessinga/Desktop/nyc-property-sales.csv", header=TRUE, sep=",")
+
+str(property_sales)
+
+summary(property_sales)
+
+```
+
+## Remove columns
+```{r}
+## Remove columns
+nyc_sales <- property_sales %>%
+  select(-c(BUILDING.CLASS.CATEGORY, TAX.CLASS.AT.PRESENT, BLOCK,LOT,EASE.MENT, BUILDING.CLASS.AT.PRESENT,ADDRESS, APARTMENT.NUMBER,ZIP.CODE,RESIDENTIAL.UNITS, COMMERCIAL.UNITS,TOTAL.UNITS,LAND.SQUARE.FEET,GROSS.SQUARE.FEET,TAX.CLASS.AT.TIME.OF.SALE,BUILDING.CLASS.AT.TIME.OF.SALE))
+
+nyc_sales <- nyc_sales %>%
+  na.omit()  
+
+head(nyc_sales)
+
+```
+
+
+## Remame Columns and Analyze
+
+<b> Analysis Part 1 </b>
+
+```{r}
+nyc_sales2 <-rename(nyc_sales, Borough = BOROUGH, Neighborhood = NEIGHBORHOOD, SalePrice = SALE.PRICE, SaleDate=SALE.DATE, YearBuilt = YEAR.BUILT) 
+
+
+sales_summary <- nyc_sales2 %>%
+  group_by(Borough) %>%
+  summarise(mean_sale_price = mean(SalePrice),
+            median_sale_price = median(SalePrice),
+            min_sale_price = min(SalePrice),
+            max_sale_price = max(SalePrice))
+
+print(sales_summary)
+```
+
+
+
+<b> Analysis Part 2 </b>
+
+```{r}
+## line plot by borough it was meant to have colors by borough
+library(ggplot2)
+ ggplot(nyc_sales2, aes(x = SaleDate, y = SalePrice, color = Borough)) +
+  geom_line() +
+  labs(title = "Sale Price Trends Over Time",
+       x = "Sale Date",
+       y = "Sale Price") +
+  theme_minimal()
+
+```
+
+## Analysis Conclusion 
+
+<b>
+
+Final Analysis based on Analysis Part 1 :
+
+Borough 1 and 3 have the highest mean, median and max sales prices but most especially borough 1. Borough 1 most likely might be a borough where things are high in cost, from rent, food, groceries, and much more. It most likely might also be a borough near tourists areas and where many visitors tend to go to. Example Manhattan. Borough 1 properties have a higher value compared to the other boroughs.
+
+</b>
