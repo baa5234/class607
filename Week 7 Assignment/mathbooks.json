@@ -1,0 +1,31 @@
+{
+  "books": [
+    {
+      "Title": "CLEP College Algebra Book and Online",
+      "Authors": "Stu Schwartz",
+      "ISBN-13": "9780738611518 ",
+      "Publisher": "Research and Education Association",  
+    "Edition": "8th Edition",  
+    "Pages": "360" 
+    },
+
+     {
+      "Title": "A Focus on Fractions: Bringing Mathematics Education Research to the Classroom",
+      "Authors": "Marjorie M. Petit, Robert E. Laird, Caroline B Ebby, Edwin L. Marsden",
+      "ISBN-13": "9781032028453",
+      "Publisher": "Taylor and Francis",   
+    "Edition": "3rd Edition",  
+    "Pages": "230" 
+    },
+
+     {
+      "Title": "Basic Physics: A Self Teaching Guide",
+      "Authors": "Karl F. Kuhn, Frank Noschese",
+      "ISBN-13": "9781119629900 ",
+      "Publisher": "Jossey-Bass",  
+    "Edition": "3rd Edition",  
+    "Pages": "352" 
+    }
+
+  ]
+}
