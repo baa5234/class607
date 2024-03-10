@@ -1,0 +1,71 @@
+---
+title: "Week 7 - Class 607"
+author: "Blessing Anoroh"
+date: "March 5, 2024"
+output: html_document
+---
+
+## Assignment - Working with HTML, XML, and JSON
+
+```{r setup}
+library(XML)
+library(htmltools)
+library(jsonlite)
+library(xml2)
+library(DT)
+library(htmlwidgets)
+# for some R version DT may not be able to install  use the following below to install
+# install.packages("htmlwidgets", type = "binary") and 
+# install.packages("DT", type = "binary")
+```
+ 
+ \
+<font size= 3> For each source I started with "read" directly from computer. But each Data are attached with source codes to have accessible urls. </font>
+\
+
+## Loading HTML Data into R: 
+
+\
+Source Code: https://github.com/baa5234/class607/blob/main/Week%207%20Assignment/mathbooks.html
+\
+
+```{r}
+mathbooks_html <- readHTMLTable("/Users/blessinga/Desktop/Masters Data Science/week7_607/mathbooks.html")
+mathbooks_html <- mathbooks_html[[1]]
+datatable(mathbooks_html)
+```
+
+
+## Loading XML Data into R:
+
+\
+Source Code: https://github.com/baa5234/class607/blob/main/Week%207%20Assignment/mathbooks.json
+\
+
+```{r}
+mathbooks_xml <- xmlToDataFrame("/Users/blessinga/Desktop/Masters Data Science/week7_607/mathbooks.xml")
+datatable(mathbooks_xml)
+```
+
+## Loading JSON Data into R:
+
+\
+Source Code: https://github.com/baa5234/class607/blob/main/Week%207%20Assignment/mathbooks.xml
+
+\
+
+```{r}
+ mathbooks_json_df <- "/Users/blessinga/Desktop/Masters Data Science/week7_607/mathbooks.json"
+mathbooks_json2 <- jsonlite::fromJSON(mathbooks_json_df)
+mathbooks_json <- as.data.frame(mathbooks_json2$books)
+datatable(mathbooks_json)
+```
+
+## Conclusion: 
+
+  Are the three data frames identical? 
+  
+  <font size = 4> <b> Yes the 3 data frames for HTML, XML, and Json are all identical. And also it can be tested using identical function. </b></font>
+
+\
+\
