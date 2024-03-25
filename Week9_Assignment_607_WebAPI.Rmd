@@ -1,0 +1,59 @@
+---
+title: "Data 607 -Week 9 Assignment - Web API's"
+author: "Blessing Anoroh"
+output: html_document
+date: "March 22, 2024"
+---
+
+## Task
+
+The New York Times web site provides a rich set of APIs, as described here:  https://developer.nytimes.com/apis        \
+
+You’ll need to start by signing up for an API key.  \
+
+Your task is to choose one of the New York Times APIs, construct an interface in R to read in the JSON data, and transform it into an R DataFrame.   \
+
+
+## Loading Packages 
+
+```{r setup}
+library(tidyverse)
+library(httr)
+library(jsonlite)
+library(dplyr)
+```
+
+## GET WEB API - CURRENT BESTSELLER HARDCOVER BOOKS
+```{r}
+#Get data using URL
+NYT_cur_books_url <- GET("https://api.nytimes.com/svc/books/v3/lists/current/hardcover-fiction.json?api-key=kRCHVmjeEhGbxnLq5GW3GAr5rvLPrtCn")
+
+# Parse JSON content
+NYT_popular_Books <- content(NYT_cur_books_url, as = 'text') 
+
+#in json format
+NYT_popular_books2 <- fromJSON(NYT_popular_Books)
+
+# Converting JSON to DataFrame
+NYT_popular_books2   <- NYT_popular_books2$results
+
+##only selecting needed columns
+NYT_popular_cur_books <- subset(NYT_popular_books2$books , select = c(title, author, rank, amazon_product_url))
+
+#confirm data frame
+class(NYT_popular_cur_books)
+
+```
+
+
+## Final Results 
+
+```{r}
+#display  of the dataframe
+head(NYT_popular_cur_books)
+```
+
+
+
+
+ 
