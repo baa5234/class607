@@ -1,0 +1,84 @@
+---
+title: "Discussion 11-607 (WK11)"
+author: "Blessing Anoroh"
+date: "April 8, 2024"
+output: html_document
+---
+
+## Recommender Systems - Facebook
+
+## Task 
+
+  \
+Your task is to analyze an existing recommender system that you find interesting.  You should:
+Perform a Scenario Design analysis as described below.  Consider whether it makes sense for your selected recommender system to perform scenario design twice, once for the organization (e.g. Amazon.com) and once for the organization's customers.    \
+Attempt to reverse engineer what you can about the site, from the site interface and any available information that you can find on the Internet or elsewhere.   \
+Include specific recommendations about how to improve the site's recommendation capabilities going forward. \
+Create your report using an R Markdown file, and create a discussion thread with a link to the GitHub repo where your Markdown file notebook resides.  You are not expected to need to write code for this discussion assignment.
+\
+
+Your task is to:    \
+Identify a recommender system web site, then    \
+Answer the three scenario design questions for this web site.  \
+This process of guessing/reverse engineering, while inexact, will help you build out your own ability to better account for “user needs” in designing recommender systems going forward.  Being able to place the customer first in your mind is a “soft skill” that is highly valued in the technical marketplace.
+\
+
+
+## Scenario Design Analysis
+
+**At first I wanted to do Instagram because I use it daily, then I realized not alot of people don't think of Facebook anymore. It's either TikTok or Instagram. But facebook is still well popular, I use it sometimes even more than Instagram.**
+
+\
+1. Who are your target users?
+
+Facebook target users are a vast marjority. The goal is to provide engaging content personalized to each user's preferences, creating an irresistible user experience that keeps them to spend more time on the platform and use it often. Therefore target users is a wide range.
+There are users who uses it to communicate with others and see the lives of friends anf family. There are users who uses it to connect with people all over the world. There are users who uses it for ad purposes, and also to market (sell) personal items. Facebook have groups which can be used to help a wide majority connect with people for jobs, housing, community purposes :such as gathers, charity, and much more.
+\
+\
+
+2. What are their key goals ?   
+
+The key goals varies.   \
+For USERS the key goals are to    \
+  -  Connect with friends and family        \
+  - Discover and share content        \
+  - Stay informed               \
+  - and Engage with Communities       \
+  
+  
+For the company (Facebook) their key goals are to :   \
+- Connect People        \
+-Build Products that improves lives; and speak of Facebook owns other platforms that we use alot like Instagram, and Whatsapp, and Oculus. I would not be surpised if they end up owning other platforms in the future.        \
+-Drive Revenue : which is there ad services. Alot of buisness owners especially ecommerce uses facebook to run ads and reach a large audience.       \
+-Innovate and Grow: facebook will continue to grow even in the next 200 years facebook will have tendency to exist one way or another.
+\
+\
+
+3. How can you help them accomplish those goals?
+
+As a data scientist we can help accomplish these goals for Facebook's success, aiding in achieving key goals through personalized user experiences, effective content moderation, targeted advertising, community insights, and product development. By analyzing user data and leveraging machine learning algorithms, Facebook will continue to deliver tailored content and advertisements, fosters safer communities, provides valuable insights, and continuously improves its platform to meet evolving user needs. In essence, data science empowers Facebook to better understand its users, improve its products and services, and achieve its key goals of connecting people, building communities, and driving engagement on the platform.
+
+\
+
+## Reverse Engineering
+
+Reverse engineering refers to the process of dissecting and analyzing the platform.
+Facebooks reverse engineering involves Facebook's software, systems, and algorithms to understand how they work, even without access to their underlying source code or proprietary information. This is often undertaken by researchers, developers, or security experts who are interested in uncovering hidden features, understanding the platform's behavior, or identifying potential vulnerabilities.
+
+\
+ Facebook involves various techniques, such as decompiling mobile or web applications, analyzing network traffic, inspecting HTML and JavaScript code, and observing platform behavior through experimentation. By understanding the reverse engineering of Facebook, individuals can gain insights into its inner workings, API endpoints, data structures, and algorithms, which can be valuable for building third-party applications, conducting security assessments, or simply satisfying curiosity about the platform's operations.
+
+Also:
+
+"Facebook was created and educated by you, me and everyone. In its baby years it didn’t recognize faces, most conversations were terse, banal quips lacking complicated sentence structure and deep topics. It was not able to move about the world. As it aged it became mobile and more aware of more complicated sensory details. Now that it is a young adult it has full command of human language, full sensory detail through billions of smart phones — it hears, sees, feels, tastes, and smells through the gadgets, hashtags, and visual encodings of billions of people. It has always shaped others behavior in response. FB fights and yells, bullies, hugs, asks, seeks, begs, and everything in-between." ( Source: https://un1crom.medium.com/how-i-reverse-engineered-facebook-s-feed-algorithms-to-make-a-fortune-selling-art-and-realized-c4c4755e174)
+
+**Yes facebook is also tailored to our content, likes, our most searched on the web. It shows things we like and enjoy or view mostly.**
+
+
+## Reccomendations
+
+\
+To make a better Facebook, Facebook focus should be on improving privacy controls, combatting misinformation, and promoting digital well-being. This entails providing transparent privacy settings, investing in fact-checking mechanisms, and introducing features to encourage healthy usage habits. Strengthening community standards, supporting mental health, and increasing transparency are also crucial. By fostering digital literacy, empowering user feedback, and expanding accessibility, Facebook can create a safer, more inclusive platform. These efforts will help uphold user trust and promote a positive online environment, aligning with Facebook's commitment to fostering meaningful connections and community engagement.
+
+
+\
